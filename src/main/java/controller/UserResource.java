@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/user")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public class UserResource {
 	//Newuser
 	//GetUser
@@ -23,7 +23,6 @@ public class UserResource {
 
 	@GET
 	@Path("/{userId}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 	public Response getUserById(@PathParam("userId") int userId){
 		User user;
 		try {

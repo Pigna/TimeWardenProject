@@ -30,7 +30,7 @@ public class CompanyResourceTest extends JerseyTest {
 
 	@Override
 	protected Application configure() {
-		return new ResourceConfig(CompanyService.class)
+		return new ResourceConfig(CompanyResource.class)
 				.register(new AbstractBinder() {
 					@Override
 					protected void configure() {
@@ -65,17 +65,13 @@ public class CompanyResourceTest extends JerseyTest {
 
 	@Test
 	public void addUserToCompanyPathParamTest() {
-		when(mockService.addUserToCompany(new User("addedToCompany"),1));
-
 		Response response = target("company/1/addUser").request().post(Entity.json(new User("addedToCompany")));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	public void archiveUserInCompanyPathParamTest() {
-		when(mockService.archiveUserInCompany(new User("archiveMe"), new Company("archiveTest", new User())));
-		//TODO: post 2 entities? or another way
-		Response response = target("company/1/archiveUser").request().post(Entity.json(new User("archiveMe"))); //Entity.json(new Company("archiveTest", new User())
+		Response response = target("company/1/archive/1").request().post(Entity.json(new User("archiveMe")));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 

@@ -12,15 +12,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/company")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public class CompanyResource {
 
 	@Inject
 	CompanyService companyService;
 
 	@GET
-	@Path("/company/id/{companyId}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+	@Path("/id/{companyId}")
 	public Response getCompanyByName(@PathParam("companyId") int companyId){
 		Company company;
 		try {
@@ -36,8 +35,7 @@ public class CompanyResource {
 	}
 
 	@GET
-	@Path("/company/{companyName}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+	@Path("/{companyName}")
 	public Response getCompanyByName(@PathParam("companyName") String companyName){
 		Company company;
 		try {
