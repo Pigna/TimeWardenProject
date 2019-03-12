@@ -22,14 +22,19 @@ public class UserResource {
 	UserService userService;
 
 	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 	@Path("/{userId}")
-	public Response getUserById(@PathParam("userId") String userId){
-		if(userId == null || userId.trim().length() == 0) {
-			return Response.serverError().entity("UUID cannot be blank").build();
+	public Response getUserById(@PathParam("userId") int userId){
+		User user;
+		try {
+			user = userService.getUserById(userId);
 		}
-		User user = userService.getUserById(Integer.parseInt(userId));
-		return Response.ok()
-				.entity(user)
-				.build();
+		catch (Exception ex) {
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity("User does not exists")
+					.type(MediaType.TEXT_HTML)
+					.build();
+		}
+		return Response.ok(user).build();
 	}
 }

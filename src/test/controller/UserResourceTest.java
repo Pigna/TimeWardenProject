@@ -34,7 +34,7 @@ public class UserResourceTest extends JerseyTest {
 
 
 	@Test
-	public void userPathParamTest() {
+	public void getUserPathParamTest() {
 		when(mockService.getUserById(1)).thenReturn(new User());
 
 		Response response = target("user/1").request().get();
@@ -45,5 +45,4 @@ public class UserResourceTest extends JerseyTest {
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 
 	}
-
 }
