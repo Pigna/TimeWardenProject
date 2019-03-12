@@ -22,8 +22,8 @@ public class UserResource {
 	UserService userService;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 	@Path("/{userId}")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 	public Response getUserById(@PathParam("userId") int userId){
 		User user;
 		try {

@@ -1,8 +1,8 @@
 package controller;
 
+import model.logic.Company;
 import model.logic.User;
 import model.service.CompanyService;
-import model.service.UserService;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -14,7 +14,6 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -41,41 +40,50 @@ public class CompanyResourceTest extends JerseyTest {
 	}
 
 	@Test
-	public void getCompanyPathParamTest() {
+	public void getCompanyByIdPathParamTest() {
 		when(mockService.getCompanyById(1)).thenReturn(new Company());
 
-		Response response = target("company/1").request().get();
+		Response response = target("company/id/").request().get();
+		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
+	}
+
+	@Test
+	public void getCompanyByNamePathParamTest() {
+		when(mockService.getCompanyByName("byName")).thenReturn(new Company("byName", new User()));
+
+		Response response = target("company/byName").request().get();
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	public void newCompanyPathParamTest() {
-		when(mockService.newCompany()); //TODO: then?
+		when(mockService.newCompany("bedrijf", new User())).thenReturn(new Company("bedrijf", new User()));
 
-		Response response = target("company").request().post(Entity.json(new Company()));  //@Consumes(MediaType.APPLICATION_JSON)
+		Response response = target("company").request().post(Entity.json(new Company("bedrijf", new User())));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	public void addUserToCompanyPathParamTest() {
-		when(mockService.addUserToCompany(1,1));//TODO: then?
+		when(mockService.addUserToCompany(new User("addedToCompany"),1));
 
-		Response response = target("company/1/addUser/1").request().post(new User()); //To company 1 add user 1
+		Response response = target("company/1/addUser").request().post(Entity.json(new User("addedToCompany")));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	public void archiveUserInCompanyPathParamTest() {
-		when(mockService.archiveUserInCompany(1,1));//TODO: then?
-
-		Response response = target("company/1/archive/1").request().get();
+		when(mockService.archiveUserInCompany(new User("archiveMe"), new Company("archiveTest", new User())));
+		//TODO: post 2 entities? or another way
+		Response response = target("company/1/archiveUser").request().post(Entity.json(new User("archiveMe"))); //Entity.json(new Company("archiveTest", new User())
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	public void getUsersFromCompanyPathParamTest() {
 		ArrayList<User> userList = new ArrayList<User>();
-		userList.add(new User());
+		userList.add(new User("userList1"));
+		userList.add(new User("userList2"));
 		when(mockService.usersFromCompany(1)).thenReturn(userList);
 
 		Response response = target("company/1/users").request().get();
