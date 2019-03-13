@@ -8,6 +8,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 import java.util.logging.Level;
@@ -44,5 +45,13 @@ public class UserResourceTest extends JerseyTest {
 		//Assert.assertEquals(response.readEntity(User.class));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 
+	}
+
+	@Test
+	public void newCompanyPathParamTest() {
+		when(mockService.newUser(new User())).thenReturn(new User());
+
+		Response response = target("user/new").request().post(Entity.json(new User("newUser")));
+		Assert.assertEquals("Http response should be 201.", Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 }

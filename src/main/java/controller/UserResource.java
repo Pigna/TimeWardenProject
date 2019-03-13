@@ -4,10 +4,7 @@ import model.logic.User;
 import model.service.UserService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,5 +32,17 @@ public class UserResource {
 					.build();
 		}
 		return Response.ok(user).build();
+	}
+
+	@POST
+	@Path("/new")
+	public Response postNewCompany(User newUser){
+		try{
+			User createdUser = userService.newUser(newUser);
+			return Response.status(201).entity(createdUser).build();
+		}
+		catch (Exception ex) {
+			return Response.status(400).build();
+		}
 	}
 }
