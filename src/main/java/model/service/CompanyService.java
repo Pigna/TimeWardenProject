@@ -14,7 +14,9 @@ public interface CompanyService {
 
 	void addUserToCompany(User user, int companyId);
 
-	void archiveUserInCompany(User user, Company company);
+	void archiveUserInCompany(User user, int companyId);
 
-	ArrayList<User> usersFromCompany(int companyId);
+	ArrayList<User> getUsersFromCompany(int companyId);
+
+	ArrayList<User> getUsersFromCompany(String companyName);
 }

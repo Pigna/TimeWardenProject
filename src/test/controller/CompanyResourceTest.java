@@ -59,8 +59,8 @@ public class CompanyResourceTest extends JerseyTest {
 	public void newCompanyPathParamTest() {
 		when(mockService.newCompany("bedrijf", new User())).thenReturn(new Company("bedrijf", new User()));
 
-		Response response = target("company").request().post(Entity.json(new Company("bedrijf", new User())));
-		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
+		Response response = target("company/new").request().post(Entity.json(new Company("bedrijf", new User())));
+		Assert.assertEquals("Http response should be 201.", Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class CompanyResourceTest extends JerseyTest {
 
 	@Test
 	public void archiveUserInCompanyPathParamTest() {
-		Response response = target("company/1/archive/1").request().post(Entity.json(new User("archiveMe")));
+		Response response = target("company/1/archive").request().post(Entity.json(new User("archiveMe")));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
@@ -80,9 +80,20 @@ public class CompanyResourceTest extends JerseyTest {
 		ArrayList<User> userList = new ArrayList<User>();
 		userList.add(new User("userList1"));
 		userList.add(new User("userList2"));
-		when(mockService.usersFromCompany(1)).thenReturn(userList);
+		when(mockService.getUsersFromCompany(1)).thenReturn(userList);
 
-		Response response = target("company/1/users").request().get();
+		Response response = target("company/id/1/users").request().get();
+		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
+	}
+
+	@Test
+	public void getUsersFromCompanyNamePathParamTest() {
+		ArrayList<User> userList = new ArrayList<User>();
+		userList.add(new User("userList1"));
+		userList.add(new User("userList2"));
+		when(mockService.getUsersFromCompany("companyName")).thenReturn(userList);
+
+		Response response = target("company/companyName/users").request().get();
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 }
