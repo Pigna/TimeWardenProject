@@ -1,4 +1,4 @@
 package model.service;
 
-public class TaskService {
+public interface TaskService {
 }

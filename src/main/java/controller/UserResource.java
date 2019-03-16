@@ -1,11 +1,9 @@
 package controller;
 
-import model.control.NewUserCountInterceptor;
 import model.logic.User;
 import model.service.UserService;
 
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,9 +11,6 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public class UserResource {
-	//Newuser
-	//GetUser
-	//GetUsersFromCompany
 
 	@Inject
 	UserService userService;
@@ -38,7 +33,6 @@ public class UserResource {
 
 	@POST
 	@Path("/new")
-	@Interceptors(NewUserCountInterceptor.class)
 	public Response postNewCompany(User newUser){
 		try{
 			User createdUser = userService.newUser(newUser);
