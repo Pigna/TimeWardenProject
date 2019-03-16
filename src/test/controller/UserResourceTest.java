@@ -8,9 +8,14 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,9 +25,13 @@ import static org.mockito.Mockito.when;
 public class UserResourceTest extends JerseyTest {
 
 	private UserService mockService = mock(UserService.class);
+	ValidatorFactory factory;
+	Validator validator;
 
 	@Override
 	protected Application configure() {
+		factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
 		return new ResourceConfig(UserResource.class)
 				.register(new AbstractBinder() {
 				@Override
@@ -45,10 +54,16 @@ public class UserResourceTest extends JerseyTest {
 		//Assert.assertEquals(response.readEntity(User.class));
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 
+		//Validate the returned user, gives message because user was created without name;
+		Set<ConstraintViolation<User>> violations = validator.validate(response.readEntity(User.class));
+		for (ConstraintViolation<User> violation : violations) {
+			Logger.getAnonymousLogger().log(Level.INFO, violation.getMessage());
+		}
+
 	}
 
 	@Test
-	public void newCompanyPathParamTest() {
+	public void newUserPathParamTest() {
 		when(mockService.newUser(new User())).thenReturn(new User());
 
 		Response response = target("user/new").request().post(Entity.json(new User("newUser")));
