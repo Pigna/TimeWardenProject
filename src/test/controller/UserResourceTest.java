@@ -1,7 +1,7 @@
 package controller;
 
 import model.logic.User;
-import model.service.UserService;
+import model.service.IUserService;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 public class UserResourceTest extends JerseyTest {
 
-	private UserService mockService = mock(UserService.class);
+	private IUserService mockService = mock(IUserService.class);
 	ValidatorFactory factory;
 	Validator validator;
 
@@ -36,7 +36,7 @@ public class UserResourceTest extends JerseyTest {
 				.register(new AbstractBinder() {
 				@Override
 				protected void configure() {
-					bind(mockService).to(UserService.class);
+					bind(mockService).to(IUserService.class);
 				}
 				});
 	}

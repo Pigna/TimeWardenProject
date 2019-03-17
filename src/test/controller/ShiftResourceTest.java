@@ -1,6 +1,6 @@
 package controller;
 
-import model.service.ShiftService;
+import model.service.IShiftService;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -11,15 +11,15 @@ import static org.mockito.Mockito.mock;
 
 public class ShiftResourceTest extends JerseyTest {
 
-	private ShiftService mockService = mock(ShiftService.class);
+	private IShiftService mockService = mock(IShiftService.class);
 
 	@Override
 	protected Application configure() {
-		return new ResourceConfig(ShiftService.class)
+		return new ResourceConfig(IShiftService.class)
 				.register(new AbstractBinder() {
 					@Override
 					protected void configure() {
-						bind(mockService).to(ShiftService.class);
+						bind(mockService).to(IShiftService.class);
 					}
 				});
 	}

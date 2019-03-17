@@ -3,20 +3,46 @@ package model.service;
 import model.logic.Company;
 import model.logic.User;
 
+import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface CompanyService {
-	Company getCompanyById(int i);
+@Stateless
+@ManagedBean
+public class CompanyService implements ICompanyService, Serializable {
+	@Override
+	public Company getCompanyById(int i) {
+		return null;
+	}
 
-	Company getCompanyByName(String byName);
+	@Override
+	public Company getCompanyByName(String byName) {
+		return null;
+	}
 
-	Company newCompany(String name, User user);
+	@Override
+	public Company newCompany(String name, User user) {
+		return null;
+	}
 
-	void addUserToCompany(User user, int companyId);
+	@Override
+	public void addUserToCompany(User user, int companyId) {
 
-	void archiveUserInCompany(User user, int companyId);
+	}
 
-	ArrayList<User> getUsersFromCompany(int companyId);
+	@Override
+	public void archiveUserInCompany(User user, int companyId) {
 
-	ArrayList<User> getUsersFromCompany(String companyName);
+	}
+
+	@Override
+	public ArrayList<User> getUsersFromCompany(int companyId) {
+		return null;
+	}
+
+	@Override
+	public ArrayList<User> getUsersFromCompany(String companyName) {
+		return null;
+	}
 }

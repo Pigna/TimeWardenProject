@@ -2,7 +2,7 @@ package controller;
 
 import model.logic.Company;
 import model.logic.User;
-import model.service.CompanyService;
+import model.service.ICompanyService;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -26,7 +26,7 @@ public class CompanyResourceTest extends JerseyTest {
 
 	//get users from company
 
-	private CompanyService mockService = mock(CompanyService.class);
+	private ICompanyService mockService = mock(ICompanyService.class);
 
 	@Override
 	protected Application configure() {
@@ -34,7 +34,7 @@ public class CompanyResourceTest extends JerseyTest {
 				.register(new AbstractBinder() {
 					@Override
 					protected void configure() {
-						bind(mockService).to(CompanyService.class);
+						bind(mockService).to(ICompanyService.class);
 					}
 				});
 	}
@@ -43,7 +43,7 @@ public class CompanyResourceTest extends JerseyTest {
 	public void getCompanyByIdPathParamTest() {
 		when(mockService.getCompanyById(1)).thenReturn(new Company());
 
-		Response response = target("company/id/").request().get();
+		Response response = target("company/id/1").request().get();
 		Assert.assertEquals("Http response should be 200.", Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 

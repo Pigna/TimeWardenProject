@@ -2,7 +2,7 @@ package controller;
 
 import model.logic.Company;
 import model.logic.User;
-import model.service.CompanyService;
+import model.service.ICompanyService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,14 +15,14 @@ import java.util.ArrayList;
 public class CompanyResource {
 
 	@Inject
-	CompanyService companyService;
+	ICompanyService ICompanyService;
 
 	@GET
 	@Path("/id/{companyId}")
 	public Response getCompanyById(@PathParam("companyId") int companyId){
 		Company company;
 		try {
-			company = companyService.getCompanyById(companyId);
+			company = ICompanyService.getCompanyById(companyId);
 		}
 		catch (Exception ex) {
 			return Response.status(Response.Status.NOT_FOUND)
@@ -38,7 +38,7 @@ public class CompanyResource {
 	public Response getCompanyByName(@PathParam("companyName") String companyName){
 		Company company;
 		try {
-			company = companyService.getCompanyByName(companyName);
+			company = ICompanyService.getCompanyByName(companyName);
 		}
 		catch (Exception ex) {
 			return Response.status(Response.Status.NOT_FOUND)
@@ -53,7 +53,7 @@ public class CompanyResource {
 	@Path("/new")
 	public Response postNewCompany(Company newCompany){
 		try{
-			Company createdCompany = companyService.newCompany(newCompany.getName(), newCompany.getCreator());
+			Company createdCompany = ICompanyService.newCompany(newCompany.getName(), newCompany.getCreator());
 			return Response.status(201).entity(createdCompany).build();
 		}
 		catch (Exception ex) {
@@ -65,7 +65,7 @@ public class CompanyResource {
 	@Path("/{companyId}/addUser")
 	public Response postAddUserToCompany(@PathParam("companyId") int companyId, User user){
 		try{
-			companyService.addUserToCompany(user, companyId);
+			ICompanyService.addUserToCompany(user, companyId);
 			return Response.status(200).build();
 		}
 		catch (Exception ex) {
@@ -77,7 +77,7 @@ public class CompanyResource {
 	@Path("/{companyId}/archive")
 	public Response postArchiveUserInCompany(@PathParam("companyId") int companyId, User user){
 		try{
-			companyService.archiveUserInCompany(user, companyId);
+			ICompanyService.archiveUserInCompany(user, companyId);
 			return Response.status(200).build();
 		}
 		catch (Exception ex) {
@@ -90,7 +90,7 @@ public class CompanyResource {
 	public Response getUsersFromCompany(@PathParam("companyName") String companyName){
 		ArrayList<User> users;
 		try {
-			users = companyService.getUsersFromCompany(companyName);
+			users = ICompanyService.getUsersFromCompany(companyName);
 		}
 		catch (Exception ex) {
 			return Response.status(Response.Status.NOT_FOUND)
@@ -106,7 +106,7 @@ public class CompanyResource {
 	public Response getUsersFromCompany(@PathParam("companyId") int companyId){
 		ArrayList<User> users;
 		try {
-			users = companyService.getUsersFromCompany(companyId);
+			users = ICompanyService.getUsersFromCompany(companyId);
 		}
 		catch (Exception ex) {
 			return Response.status(Response.Status.NOT_FOUND)

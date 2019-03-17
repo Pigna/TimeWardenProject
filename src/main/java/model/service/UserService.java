@@ -1,14 +1,42 @@
 package model.service;
 
-import model.control.NewUserCountInterceptor;
 import model.logic.User;
 
-import javax.interceptor.Interceptors;
+import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public interface UserService {
+@Stateless
+@ManagedBean
+@Named(value="userService")
+public class UserService implements IUserService, Serializable {
 
-	User getUserById(int userId);
+	public ArrayList<User> Users() {
+		ArrayList<User> users = new ArrayList<>();
+		users.add(new User("Myron"));
+		users.add(new User("Anita"));
+		users.add(new User("Will"));
+		return users;
+	}
 
-	@Interceptors(NewUserCountInterceptor.class)
-	User newUser(User user);
+	@Override
+	public User getUserById(int userId) {
+		return null;
+	}
+
+	@Override
+	public User newUser(User user) {
+		return null;
+	}
+
+	@Override
+	public ArrayList<User> getUsers() {
+		ArrayList<User> users = new ArrayList<>();
+		users.add(new User("Myron"));
+		users.add(new User("Anita"));
+		users.add(new User("Will"));
+		return users;
+	}
 }

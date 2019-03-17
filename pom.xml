@@ -18,6 +18,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <!--<security-domain name="testsd" cache-type="default">-->
+      <!--<authentication>-->
+        <!--<login-module code="Database" flag="required">-->
+          <!--<module-option name="dsJndiName" value="java:/wt/testds"/>-->
+          <!--<module-option name="principalsQuery" value="select pwd from credential where uname=?"/>-->
+          <!--<module-option name="rolesQuery" value="select urole, 'Roles' from credential where uname=?"/>-->
+        <!--</login-module>-->
+      <!--</authentication>-->
+    <!--</security-domain>-->
   </properties>
 <dependencyManagement>
   <dependencies>

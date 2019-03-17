@@ -1,6 +1,6 @@
 package controller;
 
-import model.service.TaskService;
+import model.service.ITaskService;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -11,15 +11,15 @@ import static org.mockito.Mockito.mock;
 
 public class TaskResourceTest extends JerseyTest {
 
-	private TaskService mockService = mock(TaskService.class);
+	private ITaskService mockService = mock(ITaskService.class);
 
 	@Override
 	protected Application configure() {
-		return new ResourceConfig(TaskService.class)
+		return new ResourceConfig(ITaskService.class)
 				.register(new AbstractBinder() {
 					@Override
 					protected void configure() {
-						bind(mockService).to(TaskService.class);
+						bind(mockService).to(ITaskService.class);
 					}
 				});
 	}
